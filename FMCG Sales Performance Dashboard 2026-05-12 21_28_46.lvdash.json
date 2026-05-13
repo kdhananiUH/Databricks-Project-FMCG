@@ -1,0 +1,679 @@
+{
+  "datasets": [
+    {
+      "name": "8c9b4f0d",
+      "displayName": "vw_fact_orders_enriched",
+      "config": {
+        "version": "1.1",
+        "source": "fmcg.gold.vw_fact_orders_enriched",
+        "dimensions": [
+          {
+            "name": "date",
+            "expr": "source.date",
+            "displayName": "Date"
+          },
+          {
+            "name": "product_code",
+            "expr": "source.product_code",
+            "displayName": "Product Code"
+          },
+          {
+            "name": "customer_code",
+            "expr": "source.customer_code",
+            "displayName": "Customer Code"
+          },
+          {
+            "name": "date_key",
+            "expr": "source.date_key",
+            "displayName": "Date Key"
+          },
+          {
+            "name": "year",
+            "expr": "source.year",
+            "displayName": "Year"
+          },
+          {
+            "name": "month_name",
+            "expr": "source.month_name",
+            "displayName": "Month Name"
+          },
+          {
+            "name": "month_short_name",
+            "expr": "source.month_short_name",
+            "displayName": "Month Short Name"
+          },
+          {
+            "name": "quarter",
+            "expr": "source.quarter",
+            "displayName": "Quarter"
+          },
+          {
+            "name": "year_quarter",
+            "expr": "source.year_quarter",
+            "displayName": "Year Quarter"
+          },
+          {
+            "name": "customer",
+            "expr": "source.customer",
+            "displayName": "Customer"
+          },
+          {
+            "name": "market",
+            "expr": "source.market",
+            "displayName": "Market"
+          },
+          {
+            "name": "platform",
+            "expr": "source.platform",
+            "displayName": "Platform"
+          },
+          {
+            "name": "channel",
+            "expr": "source.channel",
+            "displayName": "Channel"
+          },
+          {
+            "name": "division",
+            "expr": "source.division",
+            "displayName": "Division"
+          },
+          {
+            "name": "category",
+            "expr": "source.category",
+            "displayName": "Category"
+          },
+          {
+            "name": "product",
+            "expr": "source.product",
+            "displayName": "Product"
+          },
+          {
+            "name": "variant",
+            "expr": "source.variant",
+            "displayName": "Variant"
+          },
+          {
+            "name": "sold_quantity",
+            "expr": "source.sold_quantity",
+            "displayName": "Sold Quantity"
+          },
+          {
+            "name": "price_inr",
+            "expr": "source.price_inr",
+            "displayName": "Price Inr"
+          },
+          {
+            "name": "total_amount_inr",
+            "expr": "source.total_amount_inr",
+            "displayName": "Total Amount Inr"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          },
+          {
+            "name": "total_revenue",
+            "expr": "SUM(total_amount_inr)",
+            "displayName": "Total Revenue"
+          },
+          {
+            "name": "total_quantity",
+            "expr": "SUM(sold_quantity)",
+            "displayName": "Total Quantity Sold"
+          },
+          {
+            "name": "avg_order_value",
+            "expr": "MEASURE(total_revenue) / MEASURE(count)",
+            "displayName": "Average Order Value"
+          }
+        ]
+      }
+    }
+  ],
+  "pages": [
+    {
+      "name": "a59d0dab",
+      "displayName": "First Page",
+      "layout": [
+        {
+          "widget": {
+            "name": "total_revenue_kpi",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "8c9b4f0d",
+                  "fields": [
+                    {
+                      "name": "sum(total_amount_inr)",
+                      "expression": "SUM(`total_amount_inr`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Total Revenue"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_amount_inr)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "total_quantity_kpi",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "8c9b4f0d",
+                  "fields": [
+                    {
+                      "name": "measure(total_quantity)",
+                      "expression": "MEASURE(`total_quantity`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Total Quantity"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(total_quantity)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "total_orders_kpi",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "8c9b4f0d",
+                  "fields": [
+                    {
+                      "name": "measure(count)",
+                      "expression": "MEASURE(`count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Total Orders"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(count)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "avg_order_value_kpi",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "8c9b4f0d",
+                  "fields": [
+                    {
+                      "name": "measure(avg_order_value)",
+                      "expression": "MEASURE(`avg_order_value`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Average Order Value"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(avg_order_value)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 0,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "revenue_trend",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "8c9b4f0d",
+                  "fields": [
+                    {
+                      "name": "month_name",
+                      "expression": "`month_name`"
+                    },
+                    {
+                      "name": "measure(total_revenue)",
+                      "expression": "MEASURE(`total_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Revenue Trend Over Time"
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "month_name",
+                  "axis": {
+                    "labelAngle": 0
+                  },
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "custom-order",
+                      "orderedValues": [
+                        "January",
+                        "February",
+                        "March",
+                        "April",
+                        "May",
+                        "June",
+                        "July",
+                        "August",
+                        "September",
+                        "October",
+                        "November",
+                        "December"
+                      ]
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(total_revenue)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 3,
+            "width": 12,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "top_products",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "8c9b4f0d",
+                  "fields": [
+                    {
+                      "name": "measure(total_revenue)",
+                      "expression": "MEASURE(`total_revenue`)"
+                    },
+                    {
+                      "name": "product",
+                      "expression": "`product`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Top 10 Products by Revenue"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "measure(total_revenue)",
+                  "scale": {
+                    "type": "quantitative",
+                    "reverse": false
+                  }
+                },
+                "y": {
+                  "fieldName": "product",
+                  "scale": {
+                    "type": "categorical",
+                    "categorySize": {
+                      "type": "number-of-categories",
+                      "number": 10
+                    },
+                    "sort": {
+                      "by": "x-reversed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "division_pie",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "8c9b4f0d",
+                  "fields": [
+                    {
+                      "name": "measure(total_revenue)",
+                      "expression": "MEASURE(`total_revenue`)"
+                    },
+                    {
+                      "name": "division",
+                      "expression": "`division`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Revenue by Division"
+              },
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "measure(total_revenue)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "division",
+                  "legend": {
+                    "hide": true
+                  },
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": false
+                },
+                "extra": [
+                  {
+                    "fieldName": "division"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 7,
+            "width": 6,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "channel_revenue",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "8c9b4f0d",
+                  "fields": [
+                    {
+                      "name": "measure(total_revenue)",
+                      "expression": "MEASURE(`total_revenue`)"
+                    },
+                    {
+                      "name": "channel",
+                      "expression": "`channel`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Revenue by Channel"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "measure(total_revenue)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "channel",
+                  "scale": {
+                    "type": "categorical",
+                    "categorySize": {
+                      "type": "number-of-categories",
+                      "number": 3
+                    },
+                    "sort": {
+                      "by": "natural-order-reversed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 11,
+            "width": 6,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "monthly_revenue",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "8c9b4f0d",
+                  "fields": [
+                    {
+                      "name": "measure(total_revenue)",
+                      "expression": "MEASURE(`total_revenue`)"
+                    },
+                    {
+                      "name": "month_short_name",
+                      "expression": "`month_short_name`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Revenue by Month"
+              },
+              "widgetType": "heatmap",
+              "encodings": {
+                "y": {
+                  "fieldName": "month_short_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "color": {
+                  "fieldName": "measure(total_revenue)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 15,
+            "width": 6,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "top_customers",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "8c9b4f0d",
+                  "fields": [
+                    {
+                      "name": "measure(total_revenue)",
+                      "expression": "MEASURE(`total_revenue`)"
+                    },
+                    {
+                      "name": "customer_code",
+                      "expression": "`customer_code`"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "`customer` IS NOT NULL AND `customer` != ''"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Top 5 Customers by Revenue"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "measure(total_revenue)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "customer_code",
+                  "scale": {
+                    "type": "categorical",
+                    "categorySize": {
+                      "type": "number-of-categories",
+                      "number": 5
+                    },
+                    "sort": {
+                      "by": "x-reversed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 14,
+            "width": 6,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
